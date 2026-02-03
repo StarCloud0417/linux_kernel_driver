@@ -21,19 +21,34 @@
 #include <linux/module.h> // 核心模組必備的 header
 #include <linux/kernel.h> // 包含 printk
 
-// ... (Metadata 省略)
+// --- 1. 身份證 (Metadata) ---
+// 這不是註解，而是給核心看的。
+// 如果沒宣告 GPL，核心會把這個模組標記為 "Tainted" (受汙染)，
+// 意味著如果系統崩潰，開發者可能不會受理 Bug Report。
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Frank Huang");
+MODULE_DESCRIPTION("A simple Hello World Kernel Module");
 
 // --- 2. 入口函數 (Initialization) ---
+// 當你執行 `insmod hello.ko` 時，核心會呼叫這個函數。
+// __init 是一個修飾詞，告訴核心：
+// 「這個函數只在初始化時用一次，執行完後請把這段程式碼佔用的記憶體釋放掉。」
+// 這顯示了核心對記憶體使用的斤斤計較。
 static int __init hello_init(void) {
     printk(KERN_INFO "Hello, Kernel! I am Frank's driver.\n");
-    return 0;
+    return 0; // 回傳 0 表示成功。如果回傳負值，模組載入會失敗。
 }
 
 // --- 3. 出口函數 (Cleanup) ---
+// 當你執行 `rmmod hello` 時，核心會呼叫這個函數。
+// 這裡非常重要！如果你在 init 裡申請了記憶體或硬體資源，
+// 一定要在這裡還回去，否則會造成 Memory Leak，直到下次重開機前都無法復原。
 static void __exit hello_exit(void) {
     printk(KERN_INFO "Goodbye, Kernel! Logging out.\n");
 }
 
+// --- 4. 註冊 (Registration) ---
+// 告訴核心，哪一個函數是起點，哪一個是終點。
 module_init(hello_init);
 module_exit(hello_exit);
 ```
@@ -61,4 +76,48 @@ graph TD
 3.  **卸載階段 (Unload)**：當你執行 `rmmod` 時，核心會呼叫 `module_exit` 標記的函數，讓你做最後的清理（如釋放記憶體），然後將模組從核心移除。
 
 ## 如何測試 (How to Test)
-(略，同前版)
+
+1.  **編譯程式碼 (Build)**
+    使用專案內的 Makefile 進行編譯。
+    ```bash
+    make
+    ```
+    *(預期結果：產生 `hello.ko` 檔案)*
+
+2.  **載入模組 (Load)**
+    使用 `insmod` 指令將模組插入核心。
+    ```bash
+    sudo insmod hello.ko
+    ```
+
+3.  **檢查輸出 (Verify)**
+    `printk` 的訊息不會直接顯示在終端機，必須查看 Kernel Ring Buffer。
+    ```bash
+    sudo dmesg | tail
+    ```
+    *(預期結果：看到 `[ ... ] Hello, Kernel! I am Frank's driver.`)*
+
+4.  **檢查模組狀態 (Check Status)**
+    確認模組是否真的在核心清單中。
+    ```bash
+    lsmod | grep hello
+    ```
+
+5.  **卸載模組 (Unload)**
+    使用 `rmmod` 指令移除模組。
+    ```bash
+    sudo rmmod hello
+    ```
+
+6.  **再次檢查輸出 (Final Check)**
+    確認卸載訊息已印出。
+    ```bash
+    sudo dmesg | tail
+    ```
+    *(預期結果：看到 `[ ... ] Goodbye, Kernel! Logging out.`)*
+
+7.  **清理暫存檔 (Clean)**
+    移除編譯產生的中間檔案。
+    ```bash
+    make clean
+    ```
