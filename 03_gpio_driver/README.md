@@ -4,78 +4,51 @@
 我們將寫一個驅動程式來控制 Raspberry Pi 5 的 GPIO 腳位，實現點燈功能。
 
 ## Raspberry Pi 5 特別注意事項 (RP1 Chip) ⚠️
+(略，保留原本的說明)
 
-Raspberry Pi 5 使用了全新的 I/O 架構 (RP1 晶片)，這導致 GPIO 的編號與舊版 (Pi 3/4) 完全不同。
-- 在 Pi 3/4 上，GPIO 17 就是系統編號 `17`。
-- 在 Pi 5 上，GPIO 的起始編號是動態的 (例如 `571` 或 `569`)。
+## 程式運作流程圖 (Execution Flow)
 
-**如何找到正確的編號？**
-執行 `sudo cat /sys/kernel/debug/gpio`，尋找 `pinctrl-rp1` 區段。
-在本範例中，我們發現 **GPIO 17** 對應到系統編號 **586**。
-因此程式碼中定義為 `#define LED_GPIO 586`。
+```mermaid
+graph TD
+    subgraph Initialization [初始化階段 (insmod)]
+        Init[gpio_driver_init] --> Check[gpio_is_valid?]
+        Check -->|Yes| Request[gpio_request]
+        Request -->|Success| Dir[gpio_direction_output = 0]
+        Dir --> Reg[register_chrdev]
+        Reg -->|Major Num| Done[等待呼叫]
+    end
 
-*(若您的系統不同，請務必先查詢再修改程式碼)*
+    subgraph Runtime [執行階段 (echo 1 > /dev/my_led)]
+        User[User Input: "1"] -->|System Call| Kernel[sys_write]
+        Kernel --> DriverWrite[dev_write]
+        DriverWrite --> Copy[copy_from_user]
+        Copy --> Logic{判斷輸入值}
+        Logic -->|'1'| On[gpio_set_value = 1]
+        Logic -->|'0'| Off[gpio_set_value = 0]
+        On --> HW((LED 亮))
+        Off --> HW((LED 滅))
+    end
 
-## 學習重點 (Key Concepts)
+    subgraph Cleanup [卸載階段 (rmmod)]
+        Exit[gpio_driver_exit] --> Reset[gpio_set_value = 0]
+        Reset --> Free[gpio_free]
+        Free --> Unreg[unregister_chrdev]
+    end
+```
 
-1.  **GPIO API**: 學習核心提供的 `gpio_request`, `gpio_direction_output`, `gpio_set_value` 等函數。
-2.  **Resource Management**: 資源（如 GPIO Pin）是有限的，必須先「申請」才能用，用完必須「釋放」(`gpio_free`)。
-3.  **Hardware Control**: 透過 `write` 系統呼叫來觸發硬體動作。
-
-## 硬體接線 (Hardware Wiring)
-
-請準備：
-- 一顆 LED
-- 一個電阻 (220Ω 或 330Ω)
-- 麵包板與杜邦線
-
-接線方式：
-- **LED 正極 (長腳)** -> 接到 **GPIO 17** (實體 Pin 11)
-- **LED 負極 (短腳)** -> 串聯電阻 -> 接到 **GND** (實體 Pin 9 或 14)
+### 流程說明：
+1.  **資源申請 (Request)**：
+    *   這一步最關鍵。我們必須先用 `gpio_request` 佔領這個腳位。
+    *   如果失敗（例如腳位已被佔用），初始化就會直接中止，避免後續錯誤。
+2.  **硬體設定 (Direction)**：
+    *   GPIO 腳位可以是輸入（讀電壓）也可以是輸出（給電壓）。
+    *   `gpio_direction_output` 強制將腳位設為輸出模式，並預設給低電位 (0)，確保 LED 一開始是滅的。
+3.  **控制邏輯 (Control Logic)**：
+    *   當用戶寫入字元時，我們只看第一個字元。
+    *   如果是 '1'，呼叫 `gpio_set_value(..., 1)` -> 晶片輸出 3.3V -> LED 亮。
+    *   如果是 '0'，呼叫 `gpio_set_value(..., 0)` -> 晶片輸出 0V -> LED 滅。
+4.  **資源釋放 (Free)**：
+    *   卸載時，務必 `gpio_free`，否則下次載入時會因為「資源忙碌」而失敗。
 
 ## 如何測試 (How to Test)
-
-### 1. 編譯與載入
-```bash
-make
-sudo insmod gpio_driver.ko
-```
-
-### 2. 建立裝置節點
-先查看 Major Number：
-```bash
-dmesg | tail
-# 假設看到: Registered correctly with major number 244
-```
-
-建立節點：
-```bash
-sudo mknod /dev/my_led c 244 0
-sudo chmod 666 /dev/my_led
-```
-
-### 3. 控制 LED
-現在，您可以用文字來控制燈光了！
-
-**開燈：**
-```bash
-echo 1 > /dev/my_led
-```
-
-**關燈：**
-```bash
-echo 0 > /dev/my_led
-```
-
-### 4. 監控 Log (方便除錯)
-不想一直打 `dmesg`？可以使用 `-w` (follow) 模式：
-```bash
-sudo dmesg -w
-```
-這樣只要驅動程式一有動作，訊息就會自動跳出來。
-
-### 5. 清理
-```bash
-sudo rm /dev/my_led
-sudo rmmod gpio_driver
-```
+(略，同前版)

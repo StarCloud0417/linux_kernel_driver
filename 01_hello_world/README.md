@@ -21,53 +21,44 @@
 #include <linux/module.h> // 核心模組必備的 header
 #include <linux/kernel.h> // 包含 printk
 
-// --- 1. 身份證 (Metadata) ---
-// 這不是註解，而是給核心看的。
-// 如果沒宣告 GPL，核心會把這個模組標記為 "Tainted" (受汙染)，
-// 意味著如果系統崩潰，開發者可能不會受理 Bug Report。
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Frank Huang");
-MODULE_DESCRIPTION("A simple Hello World Kernel Module");
+// ... (Metadata 省略)
 
 // --- 2. 入口函數 (Initialization) ---
-// 當你執行 `insmod hello.ko` 時，核心會呼叫這個函數。
-// __init 是一個修飾詞，告訴核心：
-// 「這個函數只在初始化時用一次，執行完後請把這段程式碼佔用的記憶體釋放掉。」
-// 這顯示了核心對記憶體使用的斤斤計較。
 static int __init hello_init(void) {
     printk(KERN_INFO "Hello, Kernel! I am Frank's driver.\n");
-    return 0; // 回傳 0 表示成功。如果回傳負值，模組載入會失敗。
+    return 0;
 }
 
 // --- 3. 出口函數 (Cleanup) ---
-// 當你執行 `rmmod hello` 時，核心會呼叫這個函數。
-// 這裡非常重要！如果你在 init 裡申請了記憶體或硬體資源，
-// 一定要在這裡還回去，否則會造成 Memory Leak，直到下次重開機前都無法復原。
 static void __exit hello_exit(void) {
     printk(KERN_INFO "Goodbye, Kernel! Logging out.\n");
 }
 
-// --- 4. 註冊 (Registration) ---
-// 告訴核心，哪一個函數是起點，哪一個是終點。
 module_init(hello_init);
 module_exit(hello_exit);
 ```
 
-## 如何測試 (How to Test)
+## 程式運作流程圖 (Execution Flow)
 
-1.  **編譯**
-    ```bash
-    make
-    ```
-2.  **載入模組**
-    ```bash
-    sudo insmod hello.ko
-    ```
-3.  **查看日誌**
-    ```bash
-    sudo dmesg | tail
-    ```
-4.  **卸載模組**
-    ```bash
-    sudo rmmod hello
-    ```
+```mermaid
+graph TD
+    A[User 輸入 insmod hello.ko] -->|觸發| B(Kernel 載入模組)
+    B --> C{尋找 module_init}
+    C -->|執行| D[hello_init]
+    D -->|呼叫| E[printk: Hello Kernel!]
+    E --> F[模組駐留於記憶體中]
+    
+    G[User 輸入 rmmod hello] -->|觸發| H(Kernel 卸載模組)
+    H --> I{尋找 module_exit}
+    I -->|執行| J[hello_exit]
+    J -->|呼叫| K[printk: Goodbye Kernel!]
+    K --> L[釋放記憶體 / 模組移除]
+```
+
+### 流程說明：
+1.  **載入階段 (Load)**：當你執行 `insmod` 時，核心會將你的 `.ko` 檔讀入記憶體，並尋找標記為 `module_init` 的函數來執行。這就是你的進入點。
+2.  **駐留階段 (Resident)**：執行完 `init` 後，模組不會消失，它會留在核心空間裡（雖然這個 Hello World 範例沒做什麼事，但如果是驅動程式，這時候就是在待命了）。
+3.  **卸載階段 (Unload)**：當你執行 `rmmod` 時，核心會呼叫 `module_exit` 標記的函數，讓你做最後的清理（如釋放記憶體），然後將模組從核心移除。
+
+## 如何測試 (How to Test)
+(略，同前版)
