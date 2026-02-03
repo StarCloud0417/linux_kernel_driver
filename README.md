@@ -9,7 +9,8 @@
 
 | 章節 | 專案名稱 | 描述 |
 | :--- | :--- | :--- |
-| 01 | **hello_world** | 驅動程式的起點。學習模組架構 (`init`, `exit`)、`printk` 與 `Makefile` 編譯流程。 |
+| 01 | **[hello_world](./01_hello_world)** | 驅動程式的起點。學習模組架構 (`init`, `exit`)、`printk` 與 `Makefile` 編譯流程。 |
+| 02 | **[char_driver](./02_char_driver)** | 字元驅動程式與 `file_operations`。實作一個「迴音蟲」裝置，學習 `read`/`write` 與 `copy_to_user`。 |
 
 ## 環境需求 (Environment)
 
@@ -17,47 +18,24 @@
 - **Kernel**: 6.x (Tested on Raspberry Pi 5)
 - **Tools**: `gcc`, `make`, `kernel-headers`
 
-## 如何執行 (How to Run)
+## 常用指令 Cheat Sheet
 
-以 `01_hello_world` 為例：
+```bash
+# 編譯
+make
 
-1. **進入目錄**
-   ```bash
-   cd 01_hello_world
-   ```
+# 載入模組
+sudo insmod my_module.ko
 
-2. **編譯模組**
-   ```bash
-   make
-   ```
-   成功後會產生 `hello.ko` (Kernel Object) 檔案。
+# 查看模組清單
+lsmod | grep my_module
 
-3. **載入模組 (Load Module)**
-   ```bash
-   sudo insmod hello.ko
-   ```
+# 查看核心日誌 (Debug用)
+sudo dmesg -w
 
-4. **查看核心日誌 (Check Logs)**
-   核心訊息不會直接顯示在終端機，需透過 `dmesg` 查看：
-   ```bash
-   sudo dmesg | tail
-   ```
-   應可看到輸出： `Hello, Kernel! I am Frank's driver.`
-
-5. **卸載模組 (Unload Module)**
-   ```bash
-   sudo rmmod hello
-   ```
-   查看卸載訊息：
-   ```bash
-   sudo dmesg | tail
-   ```
-
-## 學習筆記 (Notes)
-
-- **Kernel Space vs User Space**: 驅動程式運行在核心空間，權力無限但也伴隨高風險（可能導致系統崩潰）。
-- **printk**: 核心層級的 `printf`，具有不同的 Log Level (如 `KERN_INFO`)。
-- **Makefile**: 必須使用 Kernel Build System (Kbuild) 的規範來編譯 `.ko` 檔。
+# 卸載模組
+sudo rmmod my_module
+```
 
 ---
 *Created by Frank Huang with the assistance of Liuli (AI Assistant).*

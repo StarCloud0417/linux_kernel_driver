@@ -5,7 +5,7 @@
 // 1. 模組資訊 (Metadata)
 // 這對核心來說很重要，標示了這個模組的許可證、作者等資訊。
 // 如果沒有 GPL 宣告，某些核心功能可能會拒絕被此模組調用 (Tainted Kernel)。
-MODULE_LICENSE("GPL");
+MODULE_LICENSE("GPL")
 MODULE_AUTHOR("Frank Huang");
 MODULE_DESCRIPTION("A simple Hello World Kernel Module");
 MODULE_VERSION("0.1");
