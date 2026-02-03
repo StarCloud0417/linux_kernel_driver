@@ -1,1 +1,0 @@
-savedcmd_/home/star/linux_kernel_driver/01_hello_world/modules.order := {   echo /home/star/linux_kernel_driver/01_hello_world/hello.o; :; } > /home/star/linux_kernel_driver/01_hello_world/modules.order

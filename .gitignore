@@ -1,0 +1,10 @@
+# Ignore compiled kernel module files
+*.ko
+*.mod
+*.mod.c
+*.mod.o
+*.o
+*.order
+*.symvers
+.*.cmd
+.tmp_versions/

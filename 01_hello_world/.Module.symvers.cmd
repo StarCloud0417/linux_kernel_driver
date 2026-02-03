@@ -1,1 +1,0 @@
-savedcmd_/home/star/linux_kernel_driver/01_hello_world/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/star/linux_kernel_driver/01_hello_world/Module.symvers -n -T /home/star/linux_kernel_driver/01_hello_world/modules.order -i Module.symvers -e 
