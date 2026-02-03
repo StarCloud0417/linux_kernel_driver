@@ -24,7 +24,7 @@ static struct kobject *my_kobj;
 
 // --- 計時器 Callback 函數 ---
 // 當時間到時，核心會執行這個函數
-void timer_callback(struct timer_list *t) {
+static void timer_callback(struct timer_list *t) {
     // 1. 切換 LED 狀態
     led_state = !led_state;
     gpio_set_value(LED_GPIO, led_state);
@@ -62,8 +62,9 @@ static ssize_t period_store(struct kobject *kobj, struct kobj_attribute *attr, c
 }
 
 // 定義 Sysfs 屬性
-// 建立一個名為 period_ms 的檔案，權限 0666 (可讀寫)
-static struct kobj_attribute period_attr = __ATTR(period_ms, 0666, period_show, period_store);
+// 建立一個名為 period_ms 的檔案，權限 0664 (Owner/Group 可讀寫，Others 唯讀)
+// 核心安全檢查 (VERIFY_OCTAL_PERMISSIONS) 禁止使用 0666，否則會報錯
+static struct kobj_attribute period_attr = __ATTR(period_ms, 0664, period_show, period_store);
 
 // --- 初始化 ---
 static int __init led_blink_init(void) {

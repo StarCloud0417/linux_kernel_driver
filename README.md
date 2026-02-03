@@ -13,7 +13,8 @@
 | 02 | **[char_driver](./02_char_driver)** | 字元驅動程式與 `file_operations`。實作一個「迴音蟲」裝置，學習 `read`/`write` 與 `copy_to_user`。 |
 | 03 | **[gpio_driver](./03_gpio_driver)** | 實體硬體控制 (Output)。透過寫入 `/dev` 檔案來控制 LED 亮滅，學習 GPIO 資源管理。 |
 | 04 | **[gpio_input](./04_gpio_input)** | 實體硬體讀取 (Input)。使用中斷 (`request_irq`) 偵測按鈕訊號，取代傳統的 Polling。 |
-| 05 | **[led_blinking](./05_led_blinking)** | **[New]** 計時器與 Sysfs。實作自動閃爍 LED，並透過 `/sys/` 動態調整頻率。 |
+| 05 | **[led_blinking](./05_led_blinking)** | 計時器與 Sysfs。實作自動閃爍 LED，並透過 `/sys/` 動態調整頻率。 |
+| 06 | **[mutex_locking](./06_mutex_locking)** | **[New]** 並發控制。使用 Mutex 鎖解決 Race Condition 問題，確保多執行緒下的資料安全。 |
 
 ## 環境需求 (Environment)
 
