@@ -2,14 +2,61 @@
 
 這是一個基礎的字元驅動程式 (Character Driver) 範例。
 它展示了如何註冊一個裝置，並實作 `open`, `read`, `write`, `release` 等核心介面。
-這個裝置就像一個回音壁：你寫入什麼，讀取時就會得到什麼。
 
-## 學習重點 (Key Concepts)
+## 為什麼要這樣寫？ (The "Why")
 
-1.  **file_operations**: 這是驅動程式的靈魂結構，定義了 User Space 的系統呼叫 (System Call) 對應到 Kernel Space 的哪個函數。
-2.  **register_chrdev**: 向核心申請一個「主設備號 (Major Number)」。
-3.  **copy_to_user / copy_from_user**: 在核心空間 (Kernel Space) 與用戶空間 (User Space) 之間安全地搬運資料。**絕對不能使用 `memcpy`！**
-4.  **mknod**: 手動建立裝置節點 (`/dev/xxx`) 來與驅動程式連結。
+你可能會覺得困惑，為什麼要寫這麼多 `file_operations`？為什麼不能像寫 C 語言一樣直接讀寫？
+
+### 1. 核心的觀點：「一切皆檔案」
+在 Linux 中，應用程式 (User App) 不知道什麼是 LED、什麼是馬達。它只知道 **「檔案」**。
+它對所有東西的操作都只有四招：
+- `open()`: 打開檔案
+- `read()`: 讀資料
+- `write()`: 寫資料
+- `close()`: 關閉檔案
+
+所以，驅動程式的任務，就是**「欺騙」**應用程式。
+應用程式以為它在寫檔案，但實際上我們在驅動程式裡攔截了這個寫入動作，並把它轉變成硬體操作。
+
+### 2. file_operations (fops)
+這就是那個「攔截表」。
+```c
+static struct file_operations fops = {
+    .read = dev_read,    // 當用戶呼叫 read() 時，請執行我的 dev_read()
+    .write = dev_write,  // 當用戶呼叫 write() 時，請執行我的 dev_write()
+    ...
+};
+```
+如果沒有這個表，用戶對你的裝置寫資料時，核心不知道該怎麼辦，就會報錯。
+
+### 3. copy_to_user / copy_from_user
+為什麼不能用 `memcpy`？
+因為 **User Space (用戶)** 和 **Kernel Space (核心)** 的記憶體是完全隔離的兩個世界（虛擬記憶體位址不同）。
+- 用戶傳來的指標 (pointer)，在核心眼裡可能是無效的，或者是惡意程式故意傳一個核心的記憶體位址想來竊取資料。
+- `copy_from_user` 是一個帶有安全檢查的搬運工，它會確保：
+    1. 這個位址真的屬於該用戶。
+    2. 搬運過程中如果發生錯誤 (Page Fault)，能安全處理而不讓核心崩潰。
+
+### 4. Major Number (主設備號)
+這就像是裝置的「身分證字號」。
+當你在 `/dev` 建立檔案時，檔案系統只認這個號碼。
+當用戶打開 `/dev/et_device` 時，核心會看它的 Major Number (例如 243)，然後去查表：「喔，243 號是 Frank 的驅動程式」，然後把控制權交給你。
+
+## 程式碼架構圖
+
+```
+User Space (應用程式)        |        Kernel Space (驅動程式)
+---------------------------+---------------------------------------
+echo "Hi" > /dev/et_device |  ->  sys_write() 
+                           |         |
+                           |      (核心查表 fops)
+                           |         v
+                           |      dev_write()  <-- 我們寫的函數！
+                           |         |
+                           |      copy_from_user()
+                           |         v
+                           |      [kernel_buffer]
+```
 
 ## 如何測試 (How to Test)
 
@@ -53,14 +100,6 @@ echo "Hello Kernel!" > /dev/et_device
 ```bash
 cat /dev/et_device
 # Output: Hello Kernel!
-```
-
-**查看核心運作紀錄：**
-```bash
-dmesg | tail
-# 你會看到驅動程式印出的:
-# ET: Received 14 characters from the user
-# ET: Sent 14 characters to the user
 ```
 
 ### 6. 卸載與清理 (Clean Up)
