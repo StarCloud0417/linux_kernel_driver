@@ -10,27 +10,27 @@
 
 ```mermaid
 graph TD
-    subgraph Initialization [初始化階段 (insmod)]
-        Init[gpio_driver_init] --> Check[gpio_is_valid?]
+    subgraph Initialization ["初始化階段 (insmod)"]
+        Init[gpio_driver_init] --> Check["gpio_is_valid?"]
         Check -->|Yes| Request[gpio_request]
-        Request -->|Success| Dir[gpio_direction_output = 0]
+        Request -->|Success| Dir["gpio_direction_output = 0"]
         Dir --> Reg[register_chrdev]
         Reg -->|Major Num| Done[等待呼叫]
     end
 
-    subgraph Runtime [執行階段 (echo 1 > /dev/my_led)]
-        User[User Input: "1"] -->|System Call| Kernel[sys_write]
+    subgraph Runtime ["執行階段 (echo 1 > /dev/my_led)"]
+        User["User Input: 1"] -->|System Call| Kernel[sys_write]
         Kernel --> DriverWrite[dev_write]
         DriverWrite --> Copy[copy_from_user]
         Copy --> Logic{判斷輸入值}
-        Logic -->|'1'| On[gpio_set_value = 1]
-        Logic -->|'0'| Off[gpio_set_value = 0]
+        Logic -->|'1'| On["gpio_set_value = 1"]
+        Logic -->|'0'| Off["gpio_set_value = 0"]
         On --> HW((LED 亮))
         Off --> HW((LED 滅))
     end
 
-    subgraph Cleanup [卸載階段 (rmmod)]
-        Exit[gpio_driver_exit] --> Reset[gpio_set_value = 0]
+    subgraph Cleanup ["卸載階段 (rmmod)"]
+        Exit[gpio_driver_exit] --> Reset["gpio_set_value = 0"]
         Reset --> Free[gpio_free]
         Free --> Unreg[unregister_chrdev]
     end
