@@ -11,6 +11,7 @@
 | :--- | :--- | :--- |
 | 01 | **[hello_world](./01_hello_world)** | 驅動程式的起點。學習模組架構 (`init`, `exit`)、`printk` 與 `Makefile` 編譯流程。 |
 | 02 | **[char_driver](./02_char_driver)** | 字元驅動程式與 `file_operations`。實作一個「迴音蟲」裝置，學習 `read`/`write` 與 `copy_to_user`。 |
+| 03 | **[gpio_driver](./03_gpio_driver)** | **[New]** 實體硬體控制。透過寫入 `/dev` 檔案來控制 LED 亮滅，學習 GPIO 資源管理。 |
 
 ## 環境需求 (Environment)
 
