@@ -1,7 +1,20 @@
 # 03 - GPIO Output Driver (LED Control) 💡
 
 這堂課我們進入實戰：控制硬體。
-我們將寫一個驅動程式來控制 Raspberry Pi 的 GPIO 腳位，實現點燈功能。
+我們將寫一個驅動程式來控制 Raspberry Pi 5 的 GPIO 腳位，實現點燈功能。
+
+## Raspberry Pi 5 特別注意事項 (RP1 Chip) ⚠️
+
+Raspberry Pi 5 使用了全新的 I/O 架構 (RP1 晶片)，這導致 GPIO 的編號與舊版 (Pi 3/4) 完全不同。
+- 在 Pi 3/4 上，GPIO 17 就是系統編號 `17`。
+- 在 Pi 5 上，GPIO 的起始編號是動態的 (例如 `571` 或 `569`)。
+
+**如何找到正確的編號？**
+執行 `sudo cat /sys/kernel/debug/gpio`，尋找 `pinctrl-rp1` 區段。
+在本範例中，我們發現 **GPIO 17** 對應到系統編號 **586**。
+因此程式碼中定義為 `#define LED_GPIO 586`。
+
+*(若您的系統不同，請務必先查詢再修改程式碼)*
 
 ## 學習重點 (Key Concepts)
 
@@ -17,10 +30,8 @@
 - 麵包板與杜邦線
 
 接線方式：
-- **LED 正極 (長腳)** -> 接到 **GPIO 21** (實體 Pin 40)
-- **LED 負極 (短腳)** -> 串聯電阻 -> 接到 **GND** (實體 Pin 39)
-
-*(注意：如果您使用不同的 GPIO，請修改程式碼中的 `#define LED_GPIO`)*
+- **LED 正極 (長腳)** -> 接到 **GPIO 17** (實體 Pin 11)
+- **LED 負極 (短腳)** -> 串聯電阻 -> 接到 **GND** (實體 Pin 9 或 14)
 
 ## 如何測試 (How to Test)
 
@@ -56,8 +67,12 @@ echo 1 > /dev/my_led
 echo 0 > /dev/my_led
 ```
 
-### 4. 故障排除
-如果在載入時出現 `Device or resource busy`，表示該 GPIO 腳位正被其他程式 (如 Python 腳本或 gpiod) 佔用。請先關閉該程式，或重開機。
+### 4. 監控 Log (方便除錯)
+不想一直打 `dmesg`？可以使用 `-w` (follow) 模式：
+```bash
+sudo dmesg -w
+```
+這樣只要驅動程式一有動作，訊息就會自動跳出來。
 
 ### 5. 清理
 ```bash

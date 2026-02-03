@@ -11,7 +11,11 @@
 // 設定我們要控制的 GPIO Pin 腳號碼
 // 在 Raspberry Pi 上，GPIO 21 (Pin 40) 通常是安全的測試點
 // 請確認您的 LED 接在 GPIO 21 上 (實體腳位 40)
-#define LED_GPIO 21
+// Raspberry Pi 5 Special Note:
+// The GPIO controller is on the RP1 chip, and the base number is dynamic (often 571 or similar).
+// From your 'sudo cat /sys/kernel/debug/gpio', GPIO 17 is mapped to gpio-586.
+// So we must use 586, not 17.
+#define LED_GPIO 586
 #define DEVICE_NAME "my_led"
 
 static int major_number;
