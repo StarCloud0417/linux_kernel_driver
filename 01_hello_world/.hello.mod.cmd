@@ -1,0 +1,1 @@
+savedcmd_/home/star/linux_kernel_driver/01_hello_world/hello.mod := printf '%s\n'   hello.o | awk '!x[$$0]++ { print("/home/star/linux_kernel_driver/01_hello_world/"$$0) }' > /home/star/linux_kernel_driver/01_hello_world/hello.mod
