@@ -1,0 +1,13 @@
+obj-m += cdev_driver.o
+
+# 使用預設的核心原始碼路徑（適用於大多數 Linux 發行版）
+KDIR := /lib/modules/$(shell uname -r)/build
+PWD := $(shell pwd)
+
+all:
+	make -C $(KDIR) M=$(PWD) modules
+	$(CC) test_cdev_app.c -o test_cdev_app
+
+clean:
+	make -C $(KDIR) M=$(PWD) clean
+	rm -f test_cdev_app
