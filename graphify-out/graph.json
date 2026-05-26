@@ -1,0 +1,1825 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "char_driver_family",
+        "label": "Character Driver Family",
+        "nodes": [
+          "etdrv_et_driver",
+          "cdev_cdev_driver",
+          "mutex_mutex_driver"
+        ],
+        "relation": "implement",
+        "confidence": "INFERRED",
+        "confidence_score": 0.9,
+        "source_file": "README.md"
+      },
+      {
+        "id": "gpio_platform_family",
+        "label": "GPIO Platform Driver Family",
+        "nodes": [
+          "gpio_gpio_driver",
+          "gpioIn_gpio_input",
+          "led_led_blink"
+        ],
+        "relation": "implement",
+        "confidence": "INFERRED",
+        "confidence_score": 0.9,
+        "source_file": "README.md"
+      },
+      {
+        "id": "kernel_userspace_bridge",
+        "label": "Kernel-Userspace Data Bridge",
+        "nodes": [
+          "shared_copy_to_user",
+          "etdrv_et_driver",
+          "cdev_cdev_driver",
+          "mutex_mutex_driver"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "02_char_driver/et_driver.c"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "gpio_driver.c",
+      "file_type": "code",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L1",
+      "id": "03_gpio_driver_gpio_driver_c",
+      "community": 6,
+      "norm_label": "gpio_driver.c"
+    },
+    {
+      "label": "gpio_driver_init()",
+      "file_type": "code",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L37",
+      "id": "03_gpio_driver_gpio_driver_gpio_driver_init",
+      "community": 6,
+      "norm_label": "gpio_driver_init()"
+    },
+    {
+      "label": "gpio_driver_exit()",
+      "file_type": "code",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L73",
+      "id": "03_gpio_driver_gpio_driver_gpio_driver_exit",
+      "community": 6,
+      "norm_label": "gpio_driver_exit()"
+    },
+    {
+      "label": "dev_write()",
+      "file_type": "code",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L88",
+      "id": "03_gpio_driver_gpio_driver_dev_write",
+      "community": 6,
+      "norm_label": "dev_write()"
+    },
+    {
+      "label": "dev_open()",
+      "file_type": "code",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L109",
+      "id": "03_gpio_driver_gpio_driver_dev_open",
+      "community": 6,
+      "norm_label": "dev_open()"
+    },
+    {
+      "label": "dev_release()",
+      "file_type": "code",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L114",
+      "id": "03_gpio_driver_gpio_driver_dev_release",
+      "community": 6,
+      "norm_label": "dev_release()"
+    },
+    {
+      "label": "gpio_driver.mod.c",
+      "file_type": "code",
+      "source_file": "03_gpio_driver/gpio_driver.mod.c",
+      "source_location": "L1",
+      "id": "03_gpio_driver_gpio_driver_mod_c",
+      "community": 13,
+      "norm_label": "gpio_driver.mod.c"
+    },
+    {
+      "label": "led_blink.c",
+      "file_type": "code",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L1",
+      "id": "05_led_blinking_led_blink_c",
+      "community": 7,
+      "norm_label": "led_blink.c"
+    },
+    {
+      "label": "timer_callback()",
+      "file_type": "code",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L27",
+      "id": "05_led_blinking_led_blink_timer_callback",
+      "community": 7,
+      "norm_label": "timer_callback()"
+    },
+    {
+      "label": "period_show()",
+      "file_type": "code",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L40",
+      "id": "05_led_blinking_led_blink_period_show",
+      "community": 7,
+      "norm_label": "period_show()"
+    },
+    {
+      "label": "period_store()",
+      "file_type": "code",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L46",
+      "id": "05_led_blinking_led_blink_period_store",
+      "community": 7,
+      "norm_label": "period_store()"
+    },
+    {
+      "label": "led_blink_init()",
+      "file_type": "code",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L70",
+      "id": "05_led_blinking_led_blink_led_blink_init",
+      "community": 7,
+      "norm_label": "led_blink_init()"
+    },
+    {
+      "label": "led_blink_exit()",
+      "file_type": "code",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L100",
+      "id": "05_led_blinking_led_blink_led_blink_exit",
+      "community": 7,
+      "norm_label": "led_blink_exit()"
+    },
+    {
+      "label": "mutex_driver.c",
+      "file_type": "code",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L1",
+      "id": "06_mutex_locking_mutex_driver_c",
+      "community": 3,
+      "norm_label": "mutex_driver.c"
+    },
+    {
+      "label": "mutex_driver_init()",
+      "file_type": "code",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L33",
+      "id": "06_mutex_locking_mutex_driver_mutex_driver_init",
+      "community": 3,
+      "norm_label": "mutex_driver_init()"
+    },
+    {
+      "label": "mutex_driver_exit()",
+      "file_type": "code",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L51",
+      "id": "06_mutex_locking_mutex_driver_mutex_driver_exit",
+      "community": 3,
+      "norm_label": "mutex_driver_exit()"
+    },
+    {
+      "label": "dev_read()",
+      "file_type": "code",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L62",
+      "id": "06_mutex_locking_mutex_driver_dev_read",
+      "community": 3,
+      "norm_label": "dev_read()"
+    },
+    {
+      "label": "dev_write()",
+      "file_type": "code",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L87",
+      "id": "06_mutex_locking_mutex_driver_dev_write",
+      "community": 3,
+      "norm_label": "dev_write()"
+    },
+    {
+      "label": "dev_open()",
+      "file_type": "code",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L118",
+      "id": "06_mutex_locking_mutex_driver_dev_open",
+      "community": 3,
+      "norm_label": "dev_open()"
+    },
+    {
+      "label": "dev_release()",
+      "file_type": "code",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L122",
+      "id": "06_mutex_locking_mutex_driver_dev_release",
+      "community": 3,
+      "norm_label": "dev_release()"
+    },
+    {
+      "label": "mutex_driver.mod.c",
+      "file_type": "code",
+      "source_file": "06_mutex_locking/mutex_driver.mod.c",
+      "source_location": "L1",
+      "id": "06_mutex_locking_mutex_driver_mod_c",
+      "community": 14,
+      "norm_label": "mutex_driver.mod.c"
+    },
+    {
+      "label": "et_driver.c",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L1",
+      "id": "02_char_driver_et_driver_c",
+      "community": 4,
+      "norm_label": "et_driver.c"
+    },
+    {
+      "label": "char_driver_init()",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L38",
+      "id": "02_char_driver_et_driver_char_driver_init",
+      "community": 4,
+      "norm_label": "char_driver_init()"
+    },
+    {
+      "label": "char_driver_exit()",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L56",
+      "id": "02_char_driver_et_driver_char_driver_exit",
+      "community": 4,
+      "norm_label": "char_driver_exit()"
+    },
+    {
+      "label": "dev_open()",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L65",
+      "id": "02_char_driver_et_driver_dev_open",
+      "community": 4,
+      "norm_label": "dev_open()"
+    },
+    {
+      "label": "dev_read()",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L71",
+      "id": "02_char_driver_et_driver_dev_read",
+      "community": 4,
+      "norm_label": "dev_read()"
+    },
+    {
+      "label": "dev_write()",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L99",
+      "id": "02_char_driver_et_driver_dev_write",
+      "community": 4,
+      "norm_label": "dev_write()"
+    },
+    {
+      "label": "dev_release()",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L118",
+      "id": "02_char_driver_et_driver_dev_release",
+      "community": 4,
+      "norm_label": "dev_release()"
+    },
+    {
+      "label": "test_et_app.c",
+      "file_type": "code",
+      "source_file": "02_char_driver/test_et_app.c",
+      "source_location": "L1",
+      "id": "02_char_driver_test_et_app_c",
+      "community": 11,
+      "norm_label": "test_et_app.c"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "02_char_driver/test_et_app.c",
+      "source_location": "L17",
+      "id": "02_char_driver_test_et_app_main",
+      "community": 11,
+      "norm_label": "main()"
+    },
+    {
+      "label": "et_driver.mod.c",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.mod.c",
+      "source_location": "L1",
+      "id": "02_char_driver_et_driver_mod_c",
+      "community": 15,
+      "norm_label": "et_driver.mod.c"
+    },
+    {
+      "label": "cdev_driver.c",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L1",
+      "id": "02_01_cdev_driver_cdev_driver_c",
+      "community": 5,
+      "norm_label": "cdev_driver.c"
+    },
+    {
+      "label": "cdev_driver_init()",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L44",
+      "id": "02_01_cdev_driver_cdev_driver_cdev_driver_init",
+      "community": 5,
+      "norm_label": "cdev_driver_init()"
+    },
+    {
+      "label": "cdev_driver_exit()",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L100",
+      "id": "02_01_cdev_driver_cdev_driver_cdev_driver_exit",
+      "community": 5,
+      "norm_label": "cdev_driver_exit()"
+    },
+    {
+      "label": "dev_open()",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L118",
+      "id": "02_01_cdev_driver_cdev_driver_dev_open",
+      "community": 5,
+      "norm_label": "dev_open()"
+    },
+    {
+      "label": "dev_read()",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L123",
+      "id": "02_01_cdev_driver_cdev_driver_dev_read",
+      "community": 5,
+      "norm_label": "dev_read()"
+    },
+    {
+      "label": "dev_write()",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L141",
+      "id": "02_01_cdev_driver_cdev_driver_dev_write",
+      "community": 5,
+      "norm_label": "dev_write()"
+    },
+    {
+      "label": "dev_release()",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L153",
+      "id": "02_01_cdev_driver_cdev_driver_dev_release",
+      "community": 5,
+      "norm_label": "dev_release()"
+    },
+    {
+      "label": "test_cdev_app.c",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/test_cdev_app.c",
+      "source_location": "L1",
+      "id": "02_01_cdev_driver_test_cdev_app_c",
+      "community": 12,
+      "norm_label": "test_cdev_app.c"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/test_cdev_app.c",
+      "source_location": "L17",
+      "id": "02_01_cdev_driver_test_cdev_app_main",
+      "community": 12,
+      "norm_label": "main()"
+    },
+    {
+      "label": "gpio_input.c",
+      "file_type": "code",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": "L1",
+      "id": "04_gpio_input_gpio_input_c",
+      "community": 8,
+      "norm_label": "gpio_input.c"
+    },
+    {
+      "label": "gpio_irq_handler()",
+      "file_type": "code",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": "L23",
+      "id": "04_gpio_input_gpio_input_gpio_irq_handler",
+      "community": 8,
+      "norm_label": "gpio_irq_handler()"
+    },
+    {
+      "label": "gpio_irq_init()",
+      "file_type": "code",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": "L30",
+      "id": "04_gpio_input_gpio_input_gpio_irq_init",
+      "community": 8,
+      "norm_label": "gpio_irq_init()"
+    },
+    {
+      "label": "gpio_irq_exit()",
+      "file_type": "code",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": "L78",
+      "id": "04_gpio_input_gpio_input_gpio_irq_exit",
+      "community": 8,
+      "norm_label": "gpio_irq_exit()"
+    },
+    {
+      "label": "gpio_input.mod.c",
+      "file_type": "code",
+      "source_file": "04_gpio_input/gpio_input.mod.c",
+      "source_location": "L1",
+      "id": "04_gpio_input_gpio_input_mod_c",
+      "community": 16,
+      "norm_label": "gpio_input.mod.c"
+    },
+    {
+      "label": "hello.c",
+      "file_type": "code",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": "L1",
+      "id": "01_hello_world_hello_c",
+      "community": 9,
+      "norm_label": "hello.c"
+    },
+    {
+      "label": "hello_init()",
+      "file_type": "code",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": "L16",
+      "id": "01_hello_world_hello_hello_init",
+      "community": 9,
+      "norm_label": "hello_init()"
+    },
+    {
+      "label": "hello_exit()",
+      "file_type": "code",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": "L26",
+      "id": "01_hello_world_hello_hello_exit",
+      "community": 9,
+      "norm_label": "hello_exit()"
+    },
+    {
+      "label": "hello.mod.c",
+      "file_type": "code",
+      "source_file": "01_hello_world/hello.mod.c",
+      "source_location": "L1",
+      "id": "01_hello_world_hello_mod_c",
+      "community": 17,
+      "norm_label": "hello.mod.c"
+    },
+    {
+      "label": "Hello World Module",
+      "file_type": "code",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": "hello_init/hello_exit",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "hello_hello_module",
+      "community": 0,
+      "norm_label": "hello world module"
+    },
+    {
+      "label": "hello_init",
+      "file_type": "code",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": "line:1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "hello_hello_init",
+      "community": 10,
+      "norm_label": "hello_init"
+    },
+    {
+      "label": "hello_exit",
+      "file_type": "code",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": "line:1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "hello_hello_exit",
+      "community": 10,
+      "norm_label": "hello_exit"
+    },
+    {
+      "label": "module_init / module_exit Macros",
+      "file_type": "rationale",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "hello_module_init_exit",
+      "community": 0,
+      "norm_label": "module_init / module_exit macros"
+    },
+    {
+      "label": "printk Kernel Logging",
+      "file_type": "rationale",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "hello_printk",
+      "community": 10,
+      "norm_label": "printk kernel logging"
+    },
+    {
+      "label": "ET Char Driver",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "etdrv_et_driver",
+      "community": 2,
+      "norm_label": "et char driver"
+    },
+    {
+      "label": "file_operations struct",
+      "file_type": "rationale",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "etdrv_file_operations",
+      "community": 1,
+      "norm_label": "file_operations struct"
+    },
+    {
+      "label": "et_open",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "etdrv_et_open",
+      "community": 1,
+      "norm_label": "et_open"
+    },
+    {
+      "label": "et_read",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "etdrv_et_read",
+      "community": 1,
+      "norm_label": "et_read"
+    },
+    {
+      "label": "et_write",
+      "file_type": "code",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "etdrv_et_write",
+      "community": 1,
+      "norm_label": "et_write"
+    },
+    {
+      "label": "register_chrdev",
+      "file_type": "rationale",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "etdrv_register_chrdev",
+      "community": 2,
+      "norm_label": "register_chrdev"
+    },
+    {
+      "label": "ET Driver Test App",
+      "file_type": "code",
+      "source_file": "02_char_driver/test_et_app.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "etdrv_test_app",
+      "community": 2,
+      "norm_label": "et driver test app"
+    },
+    {
+      "label": "Cdev Driver",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cdev_cdev_driver",
+      "community": 2,
+      "norm_label": "cdev driver"
+    },
+    {
+      "label": "cdev struct (kernel cdev API)",
+      "file_type": "rationale",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cdev_cdev_struct",
+      "community": 2,
+      "norm_label": "cdev struct (kernel cdev api)"
+    },
+    {
+      "label": "alloc_chrdev_region",
+      "file_type": "rationale",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cdev_alloc_chrdev_region",
+      "community": 2,
+      "norm_label": "alloc_chrdev_region"
+    },
+    {
+      "label": "device_create / class_create",
+      "file_type": "rationale",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cdev_device_create",
+      "community": 2,
+      "norm_label": "device_create / class_create"
+    },
+    {
+      "label": "Cdev Driver Test App",
+      "file_type": "code",
+      "source_file": "02_01_cdev_driver/test_cdev_app.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cdev_test_app",
+      "community": 2,
+      "norm_label": "cdev driver test app"
+    },
+    {
+      "label": "GPIO Output Driver",
+      "file_type": "code",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gpio_gpio_driver",
+      "community": 0,
+      "norm_label": "gpio output driver"
+    },
+    {
+      "label": "gpio_request / gpio_direction_output",
+      "file_type": "rationale",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gpio_gpio_request",
+      "community": 0,
+      "norm_label": "gpio_request / gpio_direction_output"
+    },
+    {
+      "label": "of_get_named_gpio (Device Tree)",
+      "file_type": "rationale",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gpio_of_get_named_gpio",
+      "community": 0,
+      "norm_label": "of_get_named_gpio (device tree)"
+    },
+    {
+      "label": "platform_driver struct",
+      "file_type": "rationale",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gpio_platform_driver",
+      "community": 0,
+      "norm_label": "platform_driver struct"
+    },
+    {
+      "label": "GPIO Input Driver",
+      "file_type": "code",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gpioIn_gpio_input",
+      "community": 0,
+      "norm_label": "gpio input driver"
+    },
+    {
+      "label": "IRQ Interrupt Handler",
+      "file_type": "rationale",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gpioIn_irq_handler",
+      "community": 0,
+      "norm_label": "irq interrupt handler"
+    },
+    {
+      "label": "request_irq / gpio_to_irq",
+      "file_type": "rationale",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gpioIn_request_irq",
+      "community": 0,
+      "norm_label": "request_irq / gpio_to_irq"
+    },
+    {
+      "label": "gpio_direction_input",
+      "file_type": "rationale",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gpioIn_gpio_direction_input",
+      "community": 0,
+      "norm_label": "gpio_direction_input"
+    },
+    {
+      "label": "LED Blinking Driver",
+      "file_type": "code",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "led_led_blink",
+      "community": 0,
+      "norm_label": "led blinking driver"
+    },
+    {
+      "label": "kthread Kernel Thread",
+      "file_type": "rationale",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "led_kthread",
+      "community": 0,
+      "norm_label": "kthread kernel thread"
+    },
+    {
+      "label": "msleep / Timer Delay",
+      "file_type": "rationale",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "led_msleep",
+      "community": 0,
+      "norm_label": "msleep / timer delay"
+    },
+    {
+      "label": "Mutex Locking Driver",
+      "file_type": "code",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "mutex_mutex_driver",
+      "community": 1,
+      "norm_label": "mutex locking driver"
+    },
+    {
+      "label": "mutex_lock / mutex_unlock",
+      "file_type": "rationale",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "mutex_mutex_lock",
+      "community": 1,
+      "norm_label": "mutex_lock / mutex_unlock"
+    },
+    {
+      "label": "Shared Kernel Buffer",
+      "file_type": "rationale",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "mutex_shared_buffer",
+      "community": 1,
+      "norm_label": "shared kernel buffer"
+    },
+    {
+      "label": "Race Condition Prevention",
+      "file_type": "rationale",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Mutex used to prevent concurrent read/write from multiple processes corrupting shared kernel buffer",
+      "id": "mutex_race_condition",
+      "community": 1,
+      "norm_label": "race condition prevention"
+    },
+    {
+      "label": "Linux Kernel Module Pattern",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "shared_kernel_module",
+      "community": 0,
+      "norm_label": "linux kernel module pattern"
+    },
+    {
+      "label": "Device Tree (DTS/DTB)",
+      "file_type": "rationale",
+      "source_file": "03_gpio_driver/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "shared_device_tree",
+      "community": 0,
+      "norm_label": "device tree (dts/dtb)"
+    },
+    {
+      "label": "copy_to_user / copy_from_user",
+      "file_type": "rationale",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "shared_copy_to_user",
+      "community": 1,
+      "norm_label": "copy_to_user / copy_from_user"
+    },
+    {
+      "label": "Platform Driver Model",
+      "file_type": "rationale",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "shared_platform_driver",
+      "community": 0,
+      "norm_label": "platform driver model"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "03_gpio_driver_gpio_driver_c",
+      "target": "03_gpio_driver_gpio_driver_gpio_driver_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "03_gpio_driver_gpio_driver_c",
+      "target": "03_gpio_driver_gpio_driver_gpio_driver_exit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "03_gpio_driver_gpio_driver_c",
+      "target": "03_gpio_driver_gpio_driver_dev_write",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "03_gpio_driver_gpio_driver_c",
+      "target": "03_gpio_driver_gpio_driver_dev_open",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "03_gpio_driver_gpio_driver_c",
+      "target": "03_gpio_driver_gpio_driver_dev_release",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "05_led_blinking_led_blink_c",
+      "target": "05_led_blinking_led_blink_timer_callback",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "05_led_blinking_led_blink_c",
+      "target": "05_led_blinking_led_blink_period_show",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "05_led_blinking_led_blink_c",
+      "target": "05_led_blinking_led_blink_period_store",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "05_led_blinking_led_blink_c",
+      "target": "05_led_blinking_led_blink_led_blink_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "05_led_blinking_led_blink_c",
+      "target": "05_led_blinking_led_blink_led_blink_exit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "06_mutex_locking_mutex_driver_c",
+      "target": "06_mutex_locking_mutex_driver_mutex_driver_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "06_mutex_locking_mutex_driver_c",
+      "target": "06_mutex_locking_mutex_driver_mutex_driver_exit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "06_mutex_locking_mutex_driver_c",
+      "target": "06_mutex_locking_mutex_driver_dev_read",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "06_mutex_locking_mutex_driver_c",
+      "target": "06_mutex_locking_mutex_driver_dev_write",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L118",
+      "weight": 1.0,
+      "source": "06_mutex_locking_mutex_driver_c",
+      "target": "06_mutex_locking_mutex_driver_dev_open",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": "L122",
+      "weight": 1.0,
+      "source": "06_mutex_locking_mutex_driver_c",
+      "target": "06_mutex_locking_mutex_driver_dev_release",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "02_char_driver_et_driver_c",
+      "target": "02_char_driver_et_driver_char_driver_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "02_char_driver_et_driver_c",
+      "target": "02_char_driver_et_driver_char_driver_exit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "02_char_driver_et_driver_c",
+      "target": "02_char_driver_et_driver_dev_open",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "02_char_driver_et_driver_c",
+      "target": "02_char_driver_et_driver_dev_read",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "02_char_driver_et_driver_c",
+      "target": "02_char_driver_et_driver_dev_write",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": "L118",
+      "weight": 1.0,
+      "source": "02_char_driver_et_driver_c",
+      "target": "02_char_driver_et_driver_dev_release",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_char_driver/test_et_app.c",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "02_char_driver_test_et_app_c",
+      "target": "02_char_driver_test_et_app_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "02_01_cdev_driver_cdev_driver_c",
+      "target": "02_01_cdev_driver_cdev_driver_cdev_driver_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "02_01_cdev_driver_cdev_driver_c",
+      "target": "02_01_cdev_driver_cdev_driver_cdev_driver_exit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L118",
+      "weight": 1.0,
+      "source": "02_01_cdev_driver_cdev_driver_c",
+      "target": "02_01_cdev_driver_cdev_driver_dev_open",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "02_01_cdev_driver_cdev_driver_c",
+      "target": "02_01_cdev_driver_cdev_driver_dev_read",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L141",
+      "weight": 1.0,
+      "source": "02_01_cdev_driver_cdev_driver_c",
+      "target": "02_01_cdev_driver_cdev_driver_dev_write",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": "L153",
+      "weight": 1.0,
+      "source": "02_01_cdev_driver_cdev_driver_c",
+      "target": "02_01_cdev_driver_cdev_driver_dev_release",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "02_01_cdev_driver/test_cdev_app.c",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "02_01_cdev_driver_test_cdev_app_c",
+      "target": "02_01_cdev_driver_test_cdev_app_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "04_gpio_input_gpio_input_c",
+      "target": "04_gpio_input_gpio_input_gpio_irq_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "04_gpio_input_gpio_input_c",
+      "target": "04_gpio_input_gpio_input_gpio_irq_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "04_gpio_input_gpio_input_c",
+      "target": "04_gpio_input_gpio_input_gpio_irq_exit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "01_hello_world_hello_c",
+      "target": "01_hello_world_hello_hello_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "01_hello_world/hello.c",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "01_hello_world_hello_c",
+      "target": "01_hello_world_hello_hello_exit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "01_hello_world/hello.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "hello_hello_module",
+      "target": "hello_module_init_exit"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "01_hello_world/hello.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "hello_hello_module",
+      "target": "shared_kernel_module"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "01_hello_world/hello.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "hello_hello_init",
+      "target": "hello_printk"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "01_hello_world/hello.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "hello_hello_exit",
+      "target": "hello_printk"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "etdrv_et_driver",
+      "target": "etdrv_file_operations"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "etdrv_et_driver",
+      "target": "etdrv_register_chrdev"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_char_driver/test_et_app.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "etdrv_test_app",
+      "target": "etdrv_et_driver"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "etdrv_et_driver",
+      "target": "shared_kernel_module"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "weight": 0.85,
+      "source": "cdev_cdev_driver",
+      "target": "etdrv_et_driver"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "etdrv_file_operations",
+      "target": "etdrv_et_open"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "etdrv_file_operations",
+      "target": "etdrv_et_read"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "etdrv_file_operations",
+      "target": "etdrv_et_write"
+    },
+    {
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "weight": 0.85,
+      "source": "mutex_mutex_driver",
+      "target": "etdrv_file_operations"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "etdrv_et_read",
+      "target": "shared_copy_to_user"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_char_driver/et_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "etdrv_et_write",
+      "target": "shared_copy_to_user"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "weight": 0.9,
+      "source": "cdev_alloc_chrdev_region",
+      "target": "etdrv_register_chrdev"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "cdev_cdev_driver",
+      "target": "cdev_cdev_struct"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "cdev_cdev_driver",
+      "target": "cdev_alloc_chrdev_region"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "cdev_cdev_driver",
+      "target": "cdev_device_create"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "cdev_cdev_driver",
+      "target": "shared_copy_to_user"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_01_cdev_driver/cdev_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "cdev_cdev_driver",
+      "target": "shared_kernel_module"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "02_01_cdev_driver/test_cdev_app.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "cdev_test_app",
+      "target": "cdev_cdev_driver"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpio_gpio_driver",
+      "target": "gpio_gpio_request"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpio_gpio_driver",
+      "target": "gpio_of_get_named_gpio"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpio_gpio_driver",
+      "target": "gpio_platform_driver"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpio_gpio_driver",
+      "target": "shared_platform_driver"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpio_gpio_driver",
+      "target": "shared_kernel_module"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "weight": 0.8,
+      "source": "gpioIn_gpio_input",
+      "target": "gpio_gpio_driver"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "weight": 0.75,
+      "source": "gpioIn_gpio_direction_input",
+      "target": "gpio_gpio_request"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": null,
+      "weight": 0.9,
+      "source": "led_led_blink",
+      "target": "gpio_gpio_request"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "03_gpio_driver/gpio_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpio_of_get_named_gpio",
+      "target": "shared_device_tree"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpioIn_gpio_input",
+      "target": "gpioIn_irq_handler"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpioIn_gpio_input",
+      "target": "gpioIn_request_irq"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpioIn_gpio_input",
+      "target": "gpioIn_gpio_direction_input"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpioIn_gpio_input",
+      "target": "shared_platform_driver"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "weight": 0.85,
+      "source": "gpioIn_gpio_input",
+      "target": "shared_device_tree"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "04_gpio_input/gpio_input.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "gpioIn_gpio_input",
+      "target": "shared_kernel_module"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "led_led_blink",
+      "target": "led_kthread"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "led_led_blink",
+      "target": "led_msleep"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "led_led_blink",
+      "target": "shared_platform_driver"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": null,
+      "weight": 0.85,
+      "source": "led_led_blink",
+      "target": "shared_device_tree"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "05_led_blinking/led_blink.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "led_led_blink",
+      "target": "shared_kernel_module"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "mutex_mutex_driver",
+      "target": "mutex_mutex_lock"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "mutex_mutex_driver",
+      "target": "mutex_shared_buffer"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "mutex_mutex_driver",
+      "target": "shared_copy_to_user"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "mutex_mutex_driver",
+      "target": "shared_kernel_module"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "06_mutex_locking/mutex_driver.c",
+      "source_location": null,
+      "weight": 0.95,
+      "source": "mutex_mutex_lock",
+      "target": "mutex_race_condition"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "char_driver_family",
+      "label": "Character Driver Family",
+      "nodes": [
+        "etdrv_et_driver",
+        "cdev_cdev_driver",
+        "mutex_mutex_driver"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "README.md"
+    },
+    {
+      "id": "gpio_platform_family",
+      "label": "GPIO Platform Driver Family",
+      "nodes": [
+        "gpio_gpio_driver",
+        "gpioIn_gpio_input",
+        "led_led_blink"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "README.md"
+    },
+    {
+      "id": "kernel_userspace_bridge",
+      "label": "Kernel-Userspace Data Bridge",
+      "nodes": [
+        "shared_copy_to_user",
+        "etdrv_et_driver",
+        "cdev_cdev_driver",
+        "mutex_mutex_driver"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "02_char_driver/et_driver.c"
+    }
+  ],
+  "built_at_commit": "9e93ac9220474f6571dec8006a6182a4c485c9a8"
+}

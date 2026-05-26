@@ -31,6 +31,7 @@ static struct file_operations fops = {
     .read = dev_read,
     .write = dev_write,
     .release = dev_release,
+    .llseek = default_llseek, // 新增：支援 lseek 系統呼叫
 };
 
 // --- 初始化函數 ---

@@ -154,10 +154,13 @@ sudo dmesg -w
 
 ## Roadmap
 
-- [ ] `07` — Platform Device & Device Tree Overlay
-- [ ] `08` — I2C / SPI device driver
-- [ ] `09` — DMA buffer management
-- [ ] `10` — IOCTL interface design
+| # | Module | Status |
+|:--|:-------|:-------|
+| 07 | [enc28j60_driver](./07_enc28j60_driver) — SPI Ethernet (MAC+PHY), net_device, sk_buff, NAPI | 🔨 In Progress |
+| 08 | [esp32_wifi_driver](./08_esp32_wifi_driver) — ESP32 WiFi Coprocessor, mac80211, SPI protocol | 🔨 In Progress |
+| 09 | Platform Device & Device Tree Overlay | 📋 Planned |
+| 10 | DMA buffer management | 📋 Planned |
+| 11 | IOCTL interface design | 📋 Planned |
 
 ---
 
