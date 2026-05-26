@@ -1,10 +1,18 @@
-# Ignore compiled kernel module files
+# Kernel module build artifacts
+*.o
 *.ko
 *.mod
 *.mod.c
 *.mod.o
-*.o
 *.order
 *.symvers
-.*.cmd
 .tmp_versions/
+
+# Compiled userspace test apps
+test_et_app
+test_cdev_app
+
+# graphify cache
+graphify-out/cache/
+graphify-out/cost.json
+graphify-out/manifest.json
