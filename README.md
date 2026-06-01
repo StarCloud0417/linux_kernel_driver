@@ -18,6 +18,7 @@
 | 04 | [gpio_input](#04-gpio-input--interrupt) | GPIO input, `request_irq`, ISR, rising-edge trigger |
 | 05 | [led_blinking](#05-led-blinking--sysfs) | Kernel timers, sysfs attribute, runtime frequency control |
 | 06 | [mutex_locking](#06-mutex-locking) | Race condition demo, `mutex_init/lock/unlock`, concurrent access safety |
+| 07 | [enc28j60_driver](#07-enc28j60-spi-ethernet-driver) | SPI protocol, `module_spi_driver`, register bank switching, hw_init, NAPI (in progress) |
 
 ---
 
@@ -105,6 +106,41 @@ Demonstrates the **race condition problem** and its solution:
 
 ---
 
+### 07 ENC28J60 SPI Ethernet Driver
+A **from-scratch SPI Ethernet driver** for the ENC28J60 MAC+PHY chip — the most complex module in this series.
+Goal: make Raspberry Pi 5 recognize a second wired NIC (`eth1`) and achieve `ping`.
+
+Key concepts practiced:
+
+- `module_spi_driver` / `spi_driver` — SPI bus driver registration
+- `spi_write_then_read` — half-duplex SPI read (official kernel approach)
+- Register bank switching with `priv->bank` cache — minimize SPI round-trips
+- Silicon errata workarounds (soft reset udelay, ERXRDPT odd-address rule)
+- `enc28j60_hw_init()` — RX/TX buffer layout, ERXFCON filter, MACON MAC config, MAC address write, RXEN
+
+Progress:
+
+```
+[x] Step 1  — SPI driver skeleton, probe/remove verified
+[x] Step 2a — SPI communication + EREVID verified (chip rev B6)
+[x] Step 2b — hw_init: RX/TX buffer, MACON, MAC addr, RXEN enabled
+[ ] Step 3  — net_device registration, open/stop
+[ ] Step 4  — TX path (sk_buff → SRAM → TXRTS)
+[ ] Step 5  — IRQ + NAPI RX → ping
+```
+
+```bash
+cd 07_enc28j60_driver
+make
+sudo rmmod enc28j60 2>/dev/null
+sudo insmod enc28j60_driver.ko
+dmesg | tail -5
+```
+
+See [07_enc28j60_driver/README.md](./07_enc28j60_driver/README.md) for full notes, DTS overlay, and kernel API pitfalls.
+
+---
+
 ## Environment
 
 | Item | Detail |
@@ -149,6 +185,10 @@ sudo dmesg -w
 | `gpio_to_irq` / `request_irq` | Hardware interrupt registration |
 | `mutex_init` / `mutex_lock` / `mutex_unlock` | Kernel mutual exclusion |
 | `mod_timer` | Kernel timer for deferred/periodic work |
+| `spi_write_then_read` / `spi_write_op` | SPI half-duplex register read/write |
+| `module_spi_driver` / `spi_driver` | SPI bus driver registration |
+| `alloc_netdev` / `register_netdev` | Network device registration (upcoming) |
+| `napi_init` / `napi_schedule` | NAPI RX polling (upcoming) |
 
 ---
 
@@ -156,7 +196,7 @@ sudo dmesg -w
 
 | # | Module | Status |
 |:--|:-------|:-------|
-| 07 | [enc28j60_driver](./07_enc28j60_driver) — SPI Ethernet (MAC+PHY), net_device, sk_buff, NAPI | 🔨 In Progress |
+| 07 | [enc28j60_driver](./07_enc28j60_driver) — SPI Ethernet (MAC+PHY), net_device, sk_buff, NAPI | 🔨 In Progress (Step 2b/5) |
 | 08 | [esp32_wifi_driver](./08_esp32_wifi_driver) — ESP32 WiFi Coprocessor, mac80211, SPI protocol | 🔨 In Progress |
 | 09 | Platform Device & Device Tree Overlay | 📋 Planned |
 | 10 | DMA buffer management | 📋 Planned |
