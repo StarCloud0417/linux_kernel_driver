@@ -4,6 +4,7 @@
 
 /* SPI opcodes */
 #define ENC28J60_READ_CTRL_REG  0x00
+#define ENC28J60_WRITE_CTRL_REG 0x40
 #define ENC28J60_BIT_FIELD_SET  0x80
 #define ENC28J60_BIT_FIELD_CLR  0xA0
 #define ENC28J60_SOFT_RESET     0xFF
@@ -32,8 +33,73 @@
 /* ESTAT bits */
 #define ESTAT_CLKRDY  0x01
 
+/* Bank 0 registers：RX/TX buffer 指標 */
+#define ERDPTL  0x00   /* Read Pointer Low  */
+#define ERDPTH  0x01   /* Read Pointer High */
+#define ETXSTL  0x04   /* TX Start Low  */
+#define ETXSTH  0x05   /* TX Start High */
+#define ETXNDL  0x06   /* TX End Low  */
+#define ETXNDH  0x07   /* TX End High */
+#define ERXSTL  0x08   /* RX Start Low */
+#define ERXSTH  0x09   /* RX Start High */
+#define ERXNDL  0x0A   /* RX End Low */
+#define ERXNDH  0x0B   /* RX End High */
+#define ERXRDPTL 0x0C  /* RX Read Pointer Low */
+#define ERXRDPTH 0x0D  /* RX Read Pointer High */
+
+/* Bank 1 registers */
+#define ERXFCON (0x18 | 0x20)  /* RX filter control */
+
+/* Bank 2 registers（MAC，需 dummy byte → SPRD_MASK=0x80） */
+#define MACON1  (0x00 | 0x40 | 0x80)
+#define MACON3  (0x02 | 0x40 | 0x80)
+#define MACON4  (0x03 | 0x40 | 0x80)
+#define MABBIPG (0x04 | 0x40 | 0x80)  /* back-to-back inter-packet gap */
+#define MAIPGL  (0x06 | 0x40 | 0x80)  /* non-back-to-back IPG low */
+#define MAIPGH  (0x07 | 0x40 | 0x80)  /* non-back-to-back IPG high */
+#define MAMXFLL (0x0A | 0x40 | 0x80)  /* max frame length low */
+#define MAMXFLH (0x0B | 0x40 | 0x80)  /* max frame length high */
+
 /* Bank 3 registers */
-#define EREVID  (0x12 | 0x60)  /* revision ID；bank = (0x60>>5) = 3 */
+#define MAADR5  (0x00 | 0x60 | 0x80)  /* MAC address byte 5（先傳，對應 OUI byte 0） */
+#define MAADR6  (0x01 | 0x60 | 0x80)
+#define MAADR3  (0x02 | 0x60 | 0x80)
+#define MAADR4  (0x03 | 0x60 | 0x80)
+#define MAADR1  (0x04 | 0x60 | 0x80)
+#define MAADR2  (0x05 | 0x60 | 0x80)
+#define EREVID  (0x12 | 0x60)          /* revision ID */
+
+/* MACON1 bits */
+#define MACON1_MARXEN  0x01  /* enable MAC RX */
+#define MACON1_TXPAUS  0x08  /* enable pause frame TX */
+#define MACON1_RXPAUS  0x04  /* enable pause frame RX */
+
+/* MACON3 bits */
+#define MACON3_PADCFG0 0x20  /* auto-pad to 60 bytes + CRC */
+#define MACON3_TXCRCEN 0x10  /* auto-append CRC */
+#define MACON3_FRMLNEN 0x02  /* frame length error check */
+#define MACON3_FULDPX  0x01  /* full duplex */
+
+/* MACON4 bits */
+#define MACON4_DEFER   0x40  /* defer TX if medium busy（half duplex 用） */
+
+/* ERXFCON bits */
+#define ERXFCON_UCEN   0x80  /* unicast filter */
+#define ERXFCON_CRCEN  0x20  /* CRC check */
+#define ERXFCON_BCEN   0x01  /* broadcast filter */
+
+/* ECON1 bits */
+#define ECON1_RXEN     0x04  /* enable packet reception */
+#define ECON1_TXRTS    0x08  /* transmit request to send */
+
+/* RX/TX buffer 分配（共 8KB：0x0000 ~ 0x1FFF）
+ * RX: 0x0000 ~ 0x19FF（6656 bytes）
+ * TX: 0x1A00 ~ 0x1FFF（1536 bytes，約 1 個最大 frame）
+ * 注意：ERXST 必須是偶數（datasheet errata #3）
+ */
+#define RXSTART  0x0000
+#define RXEND    0x19FF
+#define TXSTART  0x1A00
 
 struct enc28j60_priv {
 	struct spi_device *spi;
@@ -98,6 +164,23 @@ static void enc28j60_set_bank(struct enc28j60_priv *priv, u8 addr)
 	priv->bank = b;
 }
 
+/* 寫 register（自動切 bank） */
+static int write_reg(struct enc28j60_priv *priv, u8 addr, u8 val)
+{
+	enc28j60_set_bank(priv, addr);
+	return spi_write_op(priv, ENC28J60_WRITE_CTRL_REG, addr, val);
+}
+
+/* 寫 16-bit register（低 byte 先，高 byte 後） */
+static int write_reg16(struct enc28j60_priv *priv, u8 addrl, u16 val)
+{
+	int ret;
+	ret = write_reg(priv, addrl, val & 0xFF);
+	if (ret)
+		return ret;
+	return write_reg(priv, addrl + 1, val >> 8);
+}
+
 /* 讀 register（自動切 bank） */
 static u8 read_reg(struct enc28j60_priv *priv, u8 addr)
 {
@@ -113,6 +196,67 @@ static void enc28j60_soft_reset(struct enc28j60_priv *priv)
 	spi_write_op(priv, ENC28J60_SOFT_RESET, 0, ENC28J60_SOFT_RESET);
 	udelay(2000);  /* errata workaround：等 2ms */
 	priv->bank = 0xFF;  /* reset 後 bank 回 0，標記為未知強制下次重設 */
+}
+
+/*
+ * hw_init — 完整初始化 ENC28J60（Step 2b）
+ * 參考 datasheet Section 6 + 官方 enc28j60.c
+ * 參數 mac_addr：6 bytes MAC address
+ */
+static int enc28j60_hw_init(struct enc28j60_priv *priv, const u8 *mac_addr)
+{
+	/* 1. RX buffer：0x0000 ~ 0x19FF
+	 * 注意：ERXST 必須設偶數（errata #3），0x0000 符合 */
+	write_reg16(priv, ERXSTL, RXSTART);
+	write_reg16(priv, ERXNDL, RXEND);
+	/* ERXRDPT 初始指向 RXEND（odd value errata #14：必須寫奇數） */
+	write_reg16(priv, ERXRDPTL, RXEND);
+
+	/* 2. TX buffer：0x1A00 ~ 0x1FFF（probe 時先不設 TXND，TX 時再設） */
+	write_reg16(priv, ETXSTL, TXSTART);
+
+	/* 3. RX filter：接受 unicast + broadcast，檢查 CRC */
+	write_reg(priv, ERXFCON, ERXFCON_UCEN | ERXFCON_CRCEN | ERXFCON_BCEN);
+
+	/* 4. MAC 初始化 */
+	/* MACON1：啟用 MAC RX + pause frame */
+	write_reg(priv, MACON1, MACON1_MARXEN | MACON1_TXPAUS | MACON1_RXPAUS);
+
+	/* MACON3：自動 pad 到 60 bytes、自動 CRC、frame 長度檢查
+	 * full duplex = 1 */
+	write_reg(priv, MACON3,
+		MACON3_PADCFG0 | MACON3_TXCRCEN | MACON3_FRMLNEN | MACON3_FULDPX);
+
+	/* MACON4：half duplex 模式需要 DEFER，full duplex 不需要，但官方也設了 */
+	write_reg(priv, MACON4, MACON4_DEFER);
+
+	/* MAMXFL：最大 frame 長度 1518（含 4-byte CRC） */
+	write_reg16(priv, MAMXFLL, 1518);
+
+	/* MABBIPG：full duplex back-to-back IPG = 0x15（datasheet 推薦值） */
+	write_reg(priv, MABBIPG, 0x15);
+
+	/* MAIPG：non-back-to-back IPG，datasheet 推薦 low=0x12, high=0x0C */
+	write_reg(priv, MAIPGL, 0x12);
+	write_reg(priv, MAIPGH, 0x0C);
+
+	/* 5. MAC address（ENC28J60 byte order：MAADR5 先寫，對應 mac[0]）
+	 * datasheet 說法：MAADR1 是 OUI 第一個 byte（mac_addr[0]）
+	 * 官方 driver 的對應：MAADR5=mac[0], MAADR6=mac[1], ..., MAADR1=mac[4], MAADR2=mac[5]
+	 * 等等... 實際上官方 driver 是 MAADR1=byte5, MAADR2=byte6（就是倒著）
+	 * 我們照官方：MAADR5 → mac[0], MAADR3 → mac[2], MAADR1 → mac[4] */
+	write_reg(priv, MAADR5, mac_addr[0]);
+	write_reg(priv, MAADR6, mac_addr[1]);
+	write_reg(priv, MAADR3, mac_addr[2]);
+	write_reg(priv, MAADR4, mac_addr[3]);
+	write_reg(priv, MAADR1, mac_addr[4]);
+	write_reg(priv, MAADR2, mac_addr[5]);
+
+	/* 6. 開啟 RX（設 ECON1.RXEN） */
+	spi_write_op(priv, ENC28J60_BIT_FIELD_SET, ECON1, ECON1_RXEN);
+
+	pr_info("enc28j60: hw_init 完成，MAC=%pM，RXEN 已開啟\n", mac_addr);
+	return 0;
 }
 
 static int enc28j60_probe(struct spi_device *spi)
@@ -154,6 +298,15 @@ static int enc28j60_probe(struct spi_device *spi)
 	} else {
 		pr_warn("enc28j60: EREVID 異常 (0x%02X)，SPI 通訊可能有問題\n", erevid);
 		pr_warn("enc28j60: 0xFF=MISO 恆高(未接)；0x00=MISO 恆低；0x40=SPI 問題\n");
+		return -EIO;
+	}
+
+	/* Step 2b：hw_init（使用固定測試 MAC，Step 3 改從 DTS/random 取） */
+	{
+		static const u8 test_mac[6] = { 0x02, 0x42, 0xAC, 0x11, 0x00, 0x01 };
+		ret = enc28j60_hw_init(priv, test_mac);
+		if (ret)
+			return ret;
 	}
 
 	return 0;
@@ -181,5 +334,5 @@ static struct spi_driver enc28j60_driver = {
 module_spi_driver(enc28j60_driver);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Star");
-MODULE_DESCRIPTION("ENC28J60 SPI Ethernet driver - Step 2a: SPI helpers + EREVID verify");
+MODULE_AUTHOR("Frank Huang");
+MODULE_DESCRIPTION("ENC28J60 SPI Ethernet driver - Step 2b: hw_init RX/TX/MAC/RXEN");
